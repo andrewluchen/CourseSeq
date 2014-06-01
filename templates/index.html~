@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CourseSeq</title>
+
+    <!-- Bootstrap -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Angular -->
+    <script src="../static/js/angular.min.js"></script>
+
+    <!-- My App -->
+    <script src="../static/js/app.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Project name</a>
+      </div>
+    </div>
+
+    <div class="container-fluid" ng-app='scheduleApp' ng-controller="scheduleCtrl">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Course Schedule</div>
+
+            <!-- Table -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Semester</th>
+                  <th> </th>
+                  <th> </th>
+                  <th> </th>
+                  <th> </th>
+                  <th> </th>
+                  <th> </th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Freshman Fall</td>
+                </tr>
+                <tr>
+                  <td>Freshman Spring</td>
+                </tr>
+                <tr>
+                  <td>Sophomore Fall</td>
+                </tr>
+                <tr>
+                  <td>Sophomore Spring</td>
+                </tr>
+                <tr>
+                  <td>Junior Fall</td>
+                </tr>
+                <tr>
+                  <td>Junior Spring</td>
+                </tr>
+                <tr>
+                  <td>Senior Fall</td>
+                </tr>
+                <tr>
+                  <td>Senior Spring</td>
+                </tr>
+                <tr>
+                  <td>5th Year Fall</td>
+                </tr>
+                <tr>
+                  <td>5th Year Spring</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-md-3">
+          
+          <input type="text" class="form-control" placeholder="21127, 15213, etc...">
+          
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{ selectedSemester.semester }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="semester in semesters" ng-click=updateSemester()>
+                <a href="#">{{ semester.semester }}</a>
+              </li>
+            </ul>
+          </div>
+
+          <button class="btn btn-large btn-primary">Add Class</button>
+          
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../static/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
