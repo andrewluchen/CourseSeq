@@ -6,7 +6,7 @@ scheduleApp.controller('scheduleCtrl',
     var coursesPerSemester = 7;
     var NO_COURSE = 00000;
 
-    $scope.createSemester = function(){
+    $scope.createSemester = function () {
       semestercourses = [];
       for (var i = 0; i < coursesPerSemester; i++) {
         semestercourses[i] = {"id": NO_COURSE, "course": "", "place": i};
@@ -14,7 +14,9 @@ scheduleApp.controller('scheduleCtrl',
       return semestercourses;
     }
 
-    $scope.semesters = [
+    $scope.data = {};
+    $scope.data.units = 0;
+    $scope.data.semesters = [
       {
           "id": 0,
           "semester": "Freshman Fall",
@@ -66,14 +68,37 @@ scheduleApp.controller('scheduleCtrl',
           "courses": $scope.createSemester()
       }
     ];
+
+    var YEAR = new Date().getFullYear() % 100;
+    var NEITHER = '0';
+    var BOTH = '1';
+    var FALL_ONLY = 'F' + YEAR.toString();
+    var SPRING_ONLY = 'S' + YEAR.toString();
+    
+    $scope.getSeason = function (semester) {
+        
+    }
+    
+//def check_season(course_id):
+   // fallval = schedule.course(semester=FALL_ONLY, course_number=course_id)
+   // springval = schedule.course(semester=SPRING_ONLY, course_number=course_id)
+   // if (fallval and springval):
+    //    return BOTH
+   // elif (fallval):
+   //     return FALL_ONLY
+  //  elif (springval):
+//        return SPRING_ONLY
+//    return NEITHER
+
+
     
     $scope.enteredCourse = "";
-    $scope.selectedSemester = $scope.semesters[0];
+    $scope.selectedSemester = $scope.data.semesters[0];
 
-    $scope.updateSemester = function(semester){
+    $scope.updateSemester = function (semester) {
       $scope.selectedSemester = semester;
     };
-    $scope.addCourse = function(){
+    $scope.addCourse = function () {
       for (var i = 0; i < coursesPerSemester; i++) {
         if ($scope.selectedSemester.courses[i].id == NO_COURSE) {
           $scope.selectedSemester.courses[i].id = parseInt($scope.enteredCourse);
@@ -83,15 +108,28 @@ scheduleApp.controller('scheduleCtrl',
         };
       };
     }
-    $scope.deleteCourse = function(semesterCourses, removedCourse){
+    $scope.deleteCourse = function (semesterCourses, removedCourse) {
       semesterCourses[removedCourse.place].id = NO_COURSE;
       semesterCourses[removedCourse.place].course = "";
     };
 
     $scope.username = "";
 
-    $scope.save = function(){
-      return;
+    $scope.save = function (username) {
+      var userURL = '/user/' + username;
+      $http.put(userURL, $scope.data).
+        success(function (data) {
+          // uh what do i put here?
+        }
+      )
+    }
+    $scope.load = function (username) {
+      var userURL = '/user/' + username;
+      $http.get(userURL).
+        success(function (data) {
+          $scope.data = data;
+        }
+      )
     }
 
   }
