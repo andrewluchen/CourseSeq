@@ -97,7 +97,7 @@
               {{ selectedSemester.semester }} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="semester in semesters" ng-click=updateSemester()>
+              <li ng-repeat="semester in semesters" ng-click=updateSemester(semester)>
                 <a href="#">{{ semester.semester }}</a>
               </li>
             </ul>
