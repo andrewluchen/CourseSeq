@@ -91,6 +91,16 @@
           
           <input type="text" class="form-control" placeholder="21127, 15213, etc...">
           
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{ selectedSemester.semester }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="semester in semesters" ng-click=updateSemester(semester)>
+                <a href="#">{{ semester.semester }}</a>
+              </li>
+            </ul>
           </div>
 
           <button class="btn btn-large btn-primary">Add Class</button>

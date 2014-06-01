@@ -3,6 +3,10 @@ import os
 
 app = Flask(__name__)
 
+# Don't interfere with AngularJS
+app.jinja_env.variable_start_string = '{|'
+app.jinja_env.variable_end_string = '|}'
+
 @app.route('/')
 def index():
     return render_template('index.html')
