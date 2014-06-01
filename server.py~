@@ -93,7 +93,7 @@ SCS_CS_MAJOR = {
             'num_required_courses': 1,
             'available_courses': [
                 02450,
-                05391,
+                05-391,
                 05431,
                 10601,
                 11411,
