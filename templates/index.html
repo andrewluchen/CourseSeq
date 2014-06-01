@@ -53,35 +53,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Freshman Fall</td>
-                </tr>
-                <tr>
-                  <td>Freshman Spring</td>
-                </tr>
-                <tr>
-                  <td>Sophomore Fall</td>
-                </tr>
-                <tr>
-                  <td>Sophomore Spring</td>
-                </tr>
-                <tr>
-                  <td>Junior Fall</td>
-                </tr>
-                <tr>
-                  <td>Junior Spring</td>
-                </tr>
-                <tr>
-                  <td>Senior Fall</td>
-                </tr>
-                <tr>
-                  <td>Senior Spring</td>
-                </tr>
-                <tr>
-                  <td>5th Year Fall</td>
-                </tr>
-                <tr>
-                  <td>5th Year Spring</td>
+                <tr ng-repeat="semester in semesters">
+                  <td>{{ semester.semester }}</td>
+                  <td ng-repeat="class in semester.classes">{{ class.class }}</td>
                 </tr>
               </tbody>
             </table>
@@ -89,7 +63,7 @@
         </div>
         <div class="col-md-3">
           
-          <input type="text" class="form-control" placeholder="21127, 15213, etc...">
+          <input type="text" class="form-control" placeholder="21127, 15213, etc..." ng-model="enteredClass">
           
           <!-- Single button -->
           <div class="btn-group">
@@ -103,14 +77,14 @@
             </ul>
           </div>
 
-          <button class="btn btn-large btn-primary">Add Class</button>
+          <button class="btn btn-large btn-primary" ng-click=addClass()>Add Class</button>
           
         </div>
       </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../static/js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../static/js/bootstrap.min.js"></script>
   </body>

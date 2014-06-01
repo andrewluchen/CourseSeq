@@ -10,7 +10,7 @@
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Angular -->
-    <script src="../static/js/angular.min.js"></script>
+    <script src="/static/js/angular.min.js"></script>
 
     <!-- My App -->
     <script src="../static/js/app.js"></script>
@@ -53,35 +53,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Freshman Fall</td>
-                </tr>
-                <tr>
-                  <td>Freshman Spring</td>
-                </tr>
-                <tr>
-                  <td>Sophomore Fall</td>
-                </tr>
-                <tr>
-                  <td>Sophomore Spring</td>
-                </tr>
-                <tr>
-                  <td>Junior Fall</td>
-                </tr>
-                <tr>
-                  <td>Junior Spring</td>
-                </tr>
-                <tr>
-                  <td>Senior Fall</td>
-                </tr>
-                <tr>
-                  <td>Senior Spring</td>
-                </tr>
-                <tr>
-                  <td>5th Year Fall</td>
-                </tr>
-                <tr>
-                  <td>5th Year Spring</td>
+                <tr ng-repeat="semester in semesters">
+                  <td>{{ semester.semester }}</td>
+                  <td ng-repeat="class in semester.classes">{{ class.class }}</td>
                 </tr>
               </tbody>
             </table>
@@ -89,11 +63,21 @@
         </div>
         <div class="col-md-3">
           
-          <input type="text" class="form-control" placeholder="21127, 15213, etc...">
+          <input type="text" class="form-control" placeholder="21127, 15213, etc..." ng-model="enteredClass">
           
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{ selectedSemester.semester }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="semester in semesters" ng-click=updateSemester(semester)>
+                <a href="#">{{ semester.semester }}</a>
+              </li>
+            </ul>
           </div>
 
-          <button class="btn btn-large btn-primary">Add Class</button>
+          <button class="btn btn-large btn-primary" ng-click=addClass()>Add Class</button>
           
         </div>
       </div>
