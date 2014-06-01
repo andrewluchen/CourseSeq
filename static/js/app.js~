@@ -83,7 +83,7 @@ scheduleApp.controller('scheduleCtrl',
         };
       };
     }
-    $scope.deleteCourse = function(semesterCourses, removedCourse){
+    $scope.deleteCourse = function(semestercourses, removedCourse){
       semesterCourses[removedCourse.place].id = NO_COURSE;
       semesterCourses[removedCourse.place].course = "";
     };
