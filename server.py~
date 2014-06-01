@@ -19,7 +19,7 @@ def index():
 users = {}
 
 # User save data
-@app.route('/users/<username>', methods = ['GET', 'PUT'])
+@app.route('/user/<username>', methods = ['GET', 'PUT'])
 def user(username):
     if request.method == 'GET':
         return jsonify(users[username])

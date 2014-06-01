@@ -80,54 +80,54 @@ SCS_CS_MAJOR = {
             'id': 'Algorithms & Complexity Elective',
             'num_required_courses': 1,
             'available_courses': [
-                15-354,
-                15-355,
-                15-453,
-                15-455,
-                21-301,
-                21-484
+                15354,
+                15355,
+                15453,
+                15455,
+                21301,
+                21484
             ]
         },
         {
             'id': 'Applications Elective',
             'num_required_courses': 1,
             'available_courses': [
-                02-450,
-                05-391,
-                05-431,
-                10-601,
-                11-411,
-                15-313,
-                15-322,
-                15-323,
-                15-381,
-                15-415,
-                15-462,
-                16-384,
-                16-385
+                02450,
+                05391,
+                05431,
+                10601,
+                11411,
+                15313,
+                15322,
+                15323,
+                15381,
+                15415,
+                15462,
+                16384,
+                16385
             ]
         },
         {
             'id': 'Logics & Languages Elective',
             'num_required_courses': 1,
             'available_courses': [
-                15-312,
-                15-317,
-                15-414,
-                15-424,
-                21-300,
-                80-311
+                15312,
+                15317,
+                15414,
+                15424,
+                21300,
+                80311
             ]
         },
         {
             'id': 'Logics & Languages Elective',
             'num_required_courses': 1,
             'available_courses': [
-                15-410,
-                15-411,
-                15-418,
-                15-440,
-                15-441
+                15410,
+                15411,
+                15418,
+                15440,
+                15441
             ]
         },
         {
