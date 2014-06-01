@@ -74,6 +74,7 @@ scheduleApp.controller('scheduleCtrl',
   }
   $scope.addClass = function(){
     $scope.selectedSemester.classes[0] = {"id": parseInt($scope.enteredClass), "class": $scope.enteredClass};
+    console.log($scope.selectedSemester.classes[0].id);
   }
 
   }
