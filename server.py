@@ -30,6 +30,103 @@ def user(username):
 
 ############## Some hard-coding for now
 
+PREREQS = {
+    "15110": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15112": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15121": {
+        "prerequisites": [
+            "15112"
+        ],
+        "corequisites": [
+            "21127"
+        ]
+    },
+    "15122": {
+        "prerequisites": [
+            "15112"
+        ],
+        "corequisites": [
+            "21127"
+        ]
+    },
+    "15150": {
+        "prerequisites": [
+            "15112",
+            "21127"
+        ],
+        "corequisites": [
+        ]
+    },
+    "15210": {
+        "prerequisites": [
+            "15122",
+            "15150"
+        ],
+        "corequisites": [
+        ]
+    },
+    "15211": {
+        "prerequisites": [
+            "21127",
+            "15121"
+        ],
+        "corequisites": [
+        ]
+    },
+    "15213": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15251": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15451": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15150": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15150": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    },
+    "15150": {
+        "prerequisites": [
+        ],
+        "corequisites": [
+        ]
+    }
+}
+
+@app.route('/prereqs', methods = ['GET'])
+def get_prereqs():
+    if request.method == 'GET':
+        return jsonify(PREREQS)
+
+
 SCS_CS_MAJOR = {
     'name': 'SCS - Computer Science',
     'min_units': 360,
@@ -139,7 +236,7 @@ SCS_CS_MAJOR = {
     ]
 }
 
-MAJORS = [SCS_CS_MAJOR]
+MAJORS = {"SCS_CS_M": SCS_CS_MAJOR}
 
 @app.route('/majors', methods = ['GET'])
 def get_majors():
@@ -149,7 +246,7 @@ def get_majors():
 @app.route('/majors/<major>', methods = ['GET'])
 def get_major(major):
     if request.method == 'GET':
-        return jsonify({'Major': MAJORS[0]})
+        return jsonify(MAJORS["SCS_CS_M"])
 
 ############## end of hard-coding
 

@@ -4,12 +4,13 @@ scheduleApp.controller('scheduleCtrl',
   function ($scope, $http) {
 
     var coursesPerSemester = 7;
+    var numSemesters = 9;
     var NO_COURSE = 00000;
 
     $scope.createSemester = function () {
       semestercourses = [];
       for (var i = 0; i < coursesPerSemester; i++) {
-        semestercourses[i] = {"id": NO_COURSE, "course": "", "place": i};
+        semestercourses[i] = {"id": NO_COURSE, "course": "", "place": i, "units": 0};
       };
       return semestercourses;
     }
@@ -104,6 +105,8 @@ scheduleApp.controller('scheduleCtrl',
           $scope.selectedSemester.courses[i].id = parseInt($scope.enteredCourse);
           $scope.selectedSemester.courses[i].course = $scope.enteredCourse;
           $scope.selectedSemester.courses[i].place = i;
+          $scope.selectedSemester.courses[i].units = 12;
+          $scope.update($scope.data.selectedMajor);
           return;
         };
       };
@@ -111,11 +114,40 @@ scheduleApp.controller('scheduleCtrl',
     $scope.deleteCourse = function (semesterCourses, removedCourse) {
       semesterCourses[removedCourse.place].id = NO_COURSE;
       semesterCourses[removedCourse.place].course = "";
+      semesterCourses[removedCourse.place].units = 0;
+      $scope.update($scope.data.selectedMajor);
     };
+    
+    $scope.data.precollegecredits = "1";
+    
+    $http.get('/majors').
+        success(function (data) {
+          $scope.majors = data['Majors'];
+          $scope.data.selectedMajor = $scope.majors["SCS_CS_M"];
+          $scope.update($scope.data.selectedMajor);
+        }
+      )
+    
+    $scope.countUnits = function () {
+      var sum = 0;
+      for (var i = 0; i < numSemesters; i++) {
+        for (var j = 0; j < coursesPerSemester; j++) {
+          sum += $scope.data.semesters[i].courses[j].units;
+        };
+      };
+      return sum;
+    }
+    
+    $scope.update = function (major) {
+      $scope.data.selectedMajor = major;
+      var summary = "You have " + ($scope.countUnits() + parseInt($scope.precollegecredits)).toString() + " units out of " + $scope.data.selectedMajor['min_units'] + " minimum units.\n";
+      for (var i = 0; i < $scope.data.selectedMajor.requirements.length; i++) {
+        summary += $scope.data.selectedMajor.requirements[i].id + ": \n";
+      };
+      $scope.summary = summary;
+    }
 
-    $scope.username = "";
-
-    $scope.save = function () {
+    $scope.save = function (username) {
       var userURL = '/user/' + username;
       $http.put(userURL, $scope.data).
         success(function (data) {
@@ -130,6 +162,7 @@ scheduleApp.controller('scheduleCtrl',
           $scope.data = data;
         }
       )
+      $scope.update($scope.data.selectedMajor);
     }
 
   }
