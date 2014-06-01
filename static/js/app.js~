@@ -49,7 +49,7 @@ scheduleApp.controller('scheduleCtrl',
   $scope.selectedSemester = $scope.semesters[0];
 
   $scope.updateSemester = function(semester){
-    $scope.selectedSemester = $scope.semesters[1];
+    $scope.selectedSemester = semester;
   }
   }
 )

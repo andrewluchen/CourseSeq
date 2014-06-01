@@ -1,7 +1,7 @@
 var scheduleApp = angular.module('scheduleApp', []);
 
 scheduleApp.controller('scheduleCtrl',
-  function ($scope, $http) {
+  function ($scope) {
 
   $scope.semesters = [
     {
