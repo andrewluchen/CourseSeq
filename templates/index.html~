@@ -55,15 +55,15 @@
               <tbody>
                 <tr ng-repeat="semester in semesters">
                   <td>{{ semester.semester }}</td>
-                  <td ng-repeat="class in semester.classes">
+                  <td ng-repeat="course in semester.courses">
                     
                     <!-- Single button -->
                     <div class="btn-group">
                       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{ class.class }} <span class="caret"></span>
+                        {{ course.course }} <span class="caret"></span>
                       </button>
                       <ul class="dropdown-menu" role="menu">
-                        <li ng-click="deleteClass(semester.classes, class)"><a href="#">Delete</a></li>
+                        <li ng-click="deleteCourse(semester.courses, course)"><a href="#">Delete</a></li>
                       </ul>
                     </div>
                   
@@ -75,7 +75,7 @@
         </div>
         <div class="col-md-3">
           
-          <input type="text" class="form-control" placeholder="21127, 15213, etc..." ng-model="enteredClass">
+          <input type="text" class="form-control" placeholder="21127, 15213, etc..." ng-model="enteredCourse">
           
           <!-- Single button -->
           <div class="pull-left">
@@ -92,7 +92,7 @@
           </div>
           
           <div class="pull-right">
-            <button class="btn btn-large btn-primary" ng-click="addClass()">Add Class</button>
+            <button class="btn btn-large btn-primary" ng-click="addCourse()">Add Course</button>
           </div>
           
           <p>&nbsp;</p>
