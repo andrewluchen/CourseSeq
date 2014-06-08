@@ -1,10 +1,19 @@
+function isInt(event) {
+  event = (event) ? event : window.event;
+  var charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    return false;
+  }
+  return true;
+}
+
 var scheduleApp = angular.module('scheduleApp', []);
 
 scheduleApp.controller('scheduleCtrl',
   function ($scope, $http) {
 
     var coursesPerSemester = 7;
-    var numSemesters = 9;
+    var numSemesters = 10;
     var NO_COURSE = 00000;
 
     $scope.createSemester = function () {
@@ -70,100 +79,139 @@ scheduleApp.controller('scheduleCtrl',
       }
     ];
 
-    var YEAR = new Date().getFullYear() % 100;
-    var NEITHER = '0';
-    var BOTH = '1';
-    var FALL_ONLY = 'F' + YEAR.toString();
-    var SPRING_ONLY = 'S' + YEAR.toString();
-    
     $scope.getSeason = function (semester) {
-        
     }
-    
-//def check_season(course_id):
-   // fallval = schedule.course(semester=FALL_ONLY, course_number=course_id)
-   // springval = schedule.course(semester=SPRING_ONLY, course_number=course_id)
-   // if (fallval and springval):
-    //    return BOTH
-   // elif (fallval):
-   //     return FALL_ONLY
-  //  elif (springval):
-//        return SPRING_ONLY
-//    return NEITHER
 
-
-    
     $scope.enteredCourse = "";
     $scope.selectedSemester = $scope.data.semesters[0];
 
     $scope.updateSemester = function (semester) {
       $scope.selectedSemester = semester;
     };
-    $scope.addCourse = function () {
+    
+    $scope.checkSeason = function (semester, course) {
+      flag = false;
+      if (semester["id"] % 2 == 0) {
+        fallval = false;
+        $http.get('/fall/' + course).
+          success(function (data) {
+            flag = true;
+            console.log("happen first");
+          })
+      }
+      else if (semester["id"] % 2 == 1) {
+        var springval = false;
+        $http.get('/spring/' + course).
+          success(function (data) {
+            flag = true;
+          })
+      }
+      console.log("happen second");
+      return flag;
+    };
+    
+    $scope.addCourse = function (course) {
+      if (parseInt(course) < 10000 ||
+          parseInt(course) > 99999) {
+        alert("Invalid Course");
+        return;
+      }
+      if ($scope.checkSeason($scope.selectedSemester, course)) {
+        alert("No such class this semester");
+        return;
+      }
       for (var i = 0; i < coursesPerSemester; i++) {
         if ($scope.selectedSemester.courses[i].id == NO_COURSE) {
-          $scope.selectedSemester.courses[i].id = parseInt($scope.enteredCourse);
-          $scope.selectedSemester.courses[i].course = $scope.enteredCourse;
+          $scope.selectedSemester.courses[i].id = parseInt(course);
+          $scope.selectedSemester.courses[i].course = course;
           $scope.selectedSemester.courses[i].place = i;
           $scope.selectedSemester.courses[i].units = 12;
-          $scope.update($scope.data.selectedMajor);
+          $scope.update();
           return;
         };
       };
-    }
+    };
     $scope.deleteCourse = function (semesterCourses, removedCourse) {
       semesterCourses[removedCourse.place].id = NO_COURSE;
       semesterCourses[removedCourse.place].course = "";
       semesterCourses[removedCourse.place].units = 0;
-      $scope.update($scope.data.selectedMajor);
+      $scope.update();
     };
     
-    $scope.data.precollegecredits = "1";
+    $scope.data.precollegecredits = "0";
     
-    $http.get('/majors').
-        success(function (data) {
-          $scope.majors = data['Majors'];
-          $scope.data.selectedMajor = $scope.majors["SCS_CS_M"];
-          $scope.update($scope.data.selectedMajor);
-        }
-      )
+    $.getJSON("../static/MAJORS.json", function(data) {
+      $scope.majors = data;
+      $scope.data.selectedMajor = $scope.majors["SCS_CS_M"];
+    });
     
-    $scope.countUnits = function () {
+    $scope.stuff = function () {
+      var temp;
+      $.getJSON("../static/MAJORS.json", function(data) {
+        temp = data;
+      });
+      return temp;
+    }
+    
+    $scope.countUnits = function (semesters) {
       var sum = 0;
       for (var i = 0; i < numSemesters; i++) {
         for (var j = 0; j < coursesPerSemester; j++) {
-          sum += $scope.data.semesters[i].courses[j].units;
+          sum += semesters[i].courses[j].units;
         };
       };
       return sum;
-    }
+    };
     
-    $scope.update = function (major) {
+    $scope.updateMajor = function (major) {
       $scope.data.selectedMajor = major;
-      var summary = "You have " + ($scope.countUnits() + parseInt($scope.precollegecredits)).toString() + " units out of " + $scope.data.selectedMajor['min_units'] + " minimum units.\n\n";
-      for (var i = 0; i < $scope.data.selectedMajor.requirements.length; i++) {
-        summary += $scope.data.selectedMajor.requirements[i].id + ": \n";
+      $scope.update();
+    };
+
+    $scope.countCompletedReqs = function (semesters, reqs) {
+      var count = 0;
+      for (var i = 0; i < reqs.length; i++) {
+        var flag = 0;
+        for (var j = 0; j < numSemesters && !flag; j++) {
+          for (var k = 0; k < coursesPerSemester && !flag; k++) {
+            if (semesters[j].courses[k].course == reqs[i]) {
+              flag = 1;
+            };
+          };
+        };
+        count += flag;
       };
-      $scope.summary = summary;
+      return count;
     }
+
+    $scope.update = function () {
+      var summary = "You have " + ($scope.countUnits($scope.data.semesters) + parseInt($scope.data.precollegecredits)).toString() + " units out of " + $scope.data.selectedMajor.min_units + " minimum units.\n\n";
+
+      for (var i = 0; i < $scope.data.selectedMajor.requirements.length; i++) {
+        summary += $scope.data.selectedMajor.requirements[i].id + ":  ";
+        var completed = $scope.countCompletedReqs($scope.data.semesters, $scope.data.selectedMajor.requirements[i].available_courses);
+        summary += completed.toString() + " of " + $scope.data.selectedMajor.requirements[i].num_required_courses.toString() + " completed\n";
+      };
+
+      $scope.summary = summary;
+      $scope.warnings = "Warnings:\n";
+    };
 
     $scope.save = function (username) {
       var userURL = '/user/' + username;
       $http.put(userURL, $scope.data).
         success(function (data) {
           // uh what do i put here?
-        }
-      )
-    }
+        })
+    };
     $scope.load = function (username) {
       var userURL = '/user/' + username;
       $http.get(userURL).
         success(function (data) {
           $scope.data = data;
-        }
-      )
-      $scope.update($scope.data.selectedMajor);
-    }
+        })
+      $scope.update();
+    };
 
   }
 )
