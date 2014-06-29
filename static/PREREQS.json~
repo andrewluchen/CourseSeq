@@ -1,0 +1,90 @@
+{
+  "15110": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15112": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15121": {
+      "prerequisites": [
+          "15112"
+      ],
+      "corequisites": [
+          "21127"
+      ]
+  },
+  "15122": {
+      "prerequisites": [
+          "15112"
+      ],
+      "corequisites": [
+          "21127"
+      ]
+  },
+  "15150": {
+      "prerequisites": [
+          "15112",
+          "21127"
+      ],
+      "corequisites": [
+      ]
+  },
+  "15210": {
+      "prerequisites": [
+          "15122",
+          "15150"
+      ],
+      "corequisites": [
+      ]
+  },
+  "15211": {
+      "prerequisites": [
+          "21127",
+          "15121"
+      ],
+      "corequisites": [
+      ]
+  },
+  "15213": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15251": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15451": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15150": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15150": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  },
+  "15150": {
+      "prerequisites": [
+      ],
+      "corequisites": [
+      ]
+  }
+}

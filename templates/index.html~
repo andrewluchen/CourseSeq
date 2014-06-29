@@ -94,7 +94,7 @@
             <button class="btn btn-large btn-primary" ng-click="save(username)">Save</button>
             <button class="btn btn-large btn-primary" ng-click="load(username)">Load</button>
           </div>
-          <p>(I don't actually have a database) &nbsp;</p>
+          <p>(gets cleared sometimes) &nbsp;</p>
         
           <div>Select a Major</div>
           
